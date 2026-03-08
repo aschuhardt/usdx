@@ -239,7 +239,7 @@ void serialEvent();
 
 // AM & FM Modulation changes
 // #define FM_ARCTAN 1         // Enable FM differentiator TEST - GW8RDI mod
-// #define AM_MOD_MAGN_SQRT 1  // Use more accurate SQRT method
+#define AM_MOD_MAGN_SQRT 1 // Use more accurate SQRT method
 
 //****************************************************************
 // #define DEBUG_G8RDI 1   // Enables display of error codes on LCD
@@ -350,10 +350,10 @@ void serialEvent();
 // TO BE DISABLED TO MAKE SPACE FOR CAT
 // #define CAT_EXT 1 // Extended CAT support: remote button and screen
 // control commands over CAT
-// #define CAT_STREAMING    1   // Streams audio and IQ, only 8KHz b/w, & needs
+#define CAT_STREAMING 1 // Streams audio and IQ, only 8KHz b/w, & needs
 // faster 115200 baud RS232
-// #define CAT_FAST \
-//   1 // Uses faster 115200 baud (can be changed to 57600), else 38400, 8, 1,
+#define CAT_FAST                                                               \
+  1 // Uses faster 115200 baud (can be changed to 57600), else 38400, 8, 1,
 //   N.
 
 // If short of memory on compile and not using Spectrum display, disable
@@ -416,7 +416,7 @@ void serialEvent();
 // "73 TU E E", MY_CALLSIGN #define CW_MSG2 '"CQ CQ DE " MY_CALLSIGN " +"'  //
 // Remove/add your Area prefit #define CW_MSG3 MY_CALLSIGN
 
-// #define NR_FIR 1  // GW8RDI mod. Usually this won´t fit with CAT, but
+#define NR_FIR 1 // GW8RDI mod. Usually this won´t fit with CAT, but
 // removing other options, such as CW messages, etc., can make enough space
 
 /// G8RDI comment out FAST_AGC & DIAG below to save mem space for CAT
@@ -427,12 +427,13 @@ void serialEvent();
 #define CW_VOLUME 1 // Enable separate CW tone volume in the menu
 #endif
 
-#define CW_DECODER 0 // CW decoder
+// #define CW_DECODER 0 // CW decoder
 // #define CW_INTERMEDIATE  1   // CW decoder shows intermediate characters
 // (only available for LCD and F_MCU at 20M), sequences like:  EIS[HV] EIUF
 // EAW[JP] EARL TMO TMG[ZQ] TND[BX] TNK[YC], may be good to learn CW; a full
 // list of possible sequences:  EISH5 EISV3 EIUF EIUU2 EAWJ1 EAWP EARL TMOO0
-// TMOO9 TMOO8 TMGZ7 TMGQ TNDB6 TNDX TNKY TNKC #define CW_FREQS_QRP   1   //
+// TMOO9 TMOO8 TMGZ7 TMGQ TNDB6 TNDX TNKY TNKC
+#define CW_FREQS_QRP 1 //
 // Defaults to CW QRP   frequencies when changing bands #define CW_FREQS_FISTS 1
 // // Defaults to CW FISTS frequencies when changing bands
 
@@ -526,11 +527,11 @@ void serialEvent();
 #define SEMI_QSK                                                               \
   1 // Just after keying the transmitter, keeps the RX muted for a short amount
     // of time in the anticipation for continued keying
-#define RIT_ENABLE                                                             \
+// #define RIT_ENABLE                                                             \
   1 // Receive-In-Transit alternates the receiving frequency with an
-    // user-defined offset to compensate for any necessary tuning needed on
-    // receive
-// #define VOX_ENABLE                                                             \
+// user-defined offset to compensate for any necessary tuning needed on
+// receive
+ // #define VOX_ENABLE \
   0 // Voice-On-Xmit which is switching the transceiver into transmit as soon
 // audio is detected (above noise gate level)
 // #define MOX_ENABLE     1   // Monitor-On-Xmit which is audio monitoring on
