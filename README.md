@@ -1,3 +1,8 @@
+## ** Note **
+I have heavily modified this fork for my personal use.  You are welcome to use it but I will not provide any support for your use case.
+
+This is my customized uSDX firmware.  It runs on my (white-buttton clone) uSDX clone, and builds with PlatformIO.
+
 # uSDXOpen
 GW8RDI's Open firmware branch for all versions of the uSDX transceiver, built on original USDX open code.
 Branched from https://github.com/threeme3/usdx  Copyright 2019, 2020, 2021   Guido PE1NNZ <pe1nnz@amsat.org>
