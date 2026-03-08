@@ -103,7 +103,7 @@ void serialEvent();
 
 //  G8RDI Modifications log:
 #define VERSION                                                                \
-  "4.00d" // Fixed format "9.99z" : Additions and changes Copyright 2022-2023
+  "4.00q" // Fixed format "9.99z" : Additions and changes Copyright 2022-2023
           // GW8RDI - You can use and distribute if you maintain the copyright
           // message, commercial use is prohibited.
 
@@ -157,6 +157,7 @@ void serialEvent();
 //  latched-relay band switching and SWR selection is included. 2023/04/18 -
 //  Release 4.00d : Minor updates to handle both 5 and 8 band versions of
 //  (tr)usdx clone
+//  Release 4.00q : Customizations by Addison WF7Q
 
 //  : Added new post mag IQ filter, added BlackBrick config.
 //  : todo see "// xyzzy Test with i_d"
