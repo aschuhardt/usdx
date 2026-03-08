@@ -3518,7 +3518,7 @@ uint8_t delayWithKeySense(uint32_t ms) {
 char cw_msg[6][CW_MESSAGE_LENGTH] = {CW_MSG1, CW_MSG2, CW_MSG3,
                                      CW_MSG4, CW_MSG5, CW_MSG6};
 #else
-char cw_msg[1][16] = {CW_STD_MSG};
+char cw_msg[1][CW_MESSAGE_LENGTH] = {CW_STD_MSG};
 #endif
 uint8_t cw_msg_interval = 5; // number of seconds CW message is repeated
 uint32_t cw_msg_event = 0;
@@ -8366,14 +8366,6 @@ void loop() {
       // if(menu == 0) menu = 1;
       break;
     case BL | SC:
-#ifdef CW_MESSAGE
-      if ((menumode == 1) && (menu >= CWMSG1) && (menu <= CWMSG6)) {
-        cw_msg_event = millis();
-        cw_msg_id = menu - CWMSG1;
-        menumode = 0;
-        break;
-      }
-#endif // CW_MESSAGE
       int8_t _menumode;
       if (menumode == 0) {
         _menumode = 1;
@@ -8567,85 +8559,10 @@ void loop() {
       }
       break;
 
-    case BE | DC: // Button Encoder and DC double-click for Band change (( G8RDI
-                  // mod - now bi-directional and restores freq & mode)
-
-#ifdef KEEP_BAND_DATA // G8RDI mod
-      prev_bandval = bandval;
-      prev_mode = mode;
-      if (bandval > 0 &&
-          bandval <= BANDCOUNT) // bandval 1-5/8 (0 is 6m, 9 is 160m)
-      {
-        freq_last[bandval - 1] = freq; // vfo[vfosel % 2]    // G8RDI mod - Save
-                                       // freq and mode last used on this band
-        mode_last[bandval - 1] = vfomode[vfosel % 2];
-      }
-#ifdef DEBUG_G8RDI
-      else {
-        error_code = 2;
-        show_banner(); // Debug only to show error
-        delay(600);
-      }
-#endif
-#endif
-      // delay(100);
-      /// if(bandval >= (N_BANDS-1)) bandval = 1;  // excludes 6m, 160m
-
-      // if (last_state == 0x31 || last_state == 0x10 || last_state == 0x02 ||
-      // last_state == 0x23) // ++Dir last freq step - G8RDI mod
-#if defined(RED_BUTTONS) || defined(WHITE_BUTTONS) ||                          \
-    defined(BLACK_BRICK) // For some reason, even without SWAP_ROTARY, Red
-                         // Buttons is reversed
-#if defined(REVERSE_BAND_CHANGE)
-      if (last_state == 0x13 || last_state == 0x32 || last_state == 0x20 ||
-          last_state == 0x01) // --Dir last freq step - G8RDI mod
-        bandval++;
-      else
-        bandval--;
-#else
-      if (last_state == 0x13 || last_state == 0x32 || last_state == 0x20 ||
-          last_state == 0x01) // --Dir last freq step - G8RDI mod
-        bandval--;
-      else
-        bandval++; //  G8RDI mod to make last freq change control and change dir
-#endif
-#else
-#if defined(SWAP_ROTARY) ||                                                    \
-    defined(REVERSE_BAND_CHANGE) // G8RDI mod A7. If your freq. change is
-                                 // correct, but band jump goes backwards,
-                                 // define REVERSE_BAND_CHANGE
-      if (last_state == 0x13 || last_state == 0x32 || last_state == 0x20 ||
-          last_state == 0x01) // --Dir last freq step - G8RDI mod
-        bandval--;
-      else
-        bandval++; //  G8RDI mod to make last freq change control and change dir
-#else
-      if (last_state == 0x13 || last_state == 0x32 || last_state == 0x20 ||
-          last_state == 0x01) // --Dir last freq step - G8RDI mod
-        bandval++;
-      else
-        bandval--; //  G8RDI mod to make last freq change control and change dir
-#endif
-#endif
-
-#ifdef TRUSDX
-      if (bandval >= (N_BANDS - 6))
-#else
-      if (bandval >= (N_BANDS - 1))
-#endif
-        bandval = 1; // Excludes 6m at = 0
-      else if (bandval < 1) {
-#ifdef TRUSDX
-        bandval = N_BANDS - 6; // 5 bands only
-#else
-        bandval = N_BANDS - 2; // excludes 160m  // G8RDI mod - added
-#endif
-      }
-
-      // G8RDI mod 2022/07/19 end.
-
-      stepsize = STEP_500; // G8RDI mod //STEP_1k;
-      change = true;
+    case BE | DC: // Button Encoder and DC double-click to send CQ
+      cw_msg_event = millis();
+      cw_msg_id = 0;
+      delay(150);
       break;
 
     case BE | PL:
